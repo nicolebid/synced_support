@@ -1,4 +1,4 @@
-import dash as d
+import dash 
 import dash.html as html
 import dash.dcc as dcc
 import dash_bootstrap_components as dbc
@@ -6,6 +6,8 @@ from dash import Dash
 from dash.dependencies import Input, Output, State
 from .components import *
 from .callbacks import * 
+from src.callbacks import register_callbacks
+
 
 # Initialize app
 app = Dash(
@@ -69,7 +71,7 @@ footer = html.Footer(
                 dbc.Col(html.P("Source Code: GitHub", className="mb-0"), xs=12, md="auto"),
                 dbc.Col(html.P("Last Update: Date", className="mb-0"), xs=12, md="auto"),
             ],
-            justify="between",  # space evenly on large screens
+            justify="between", 
             className="text-center text-md-start g-2",
         ),
         fluid=True,
