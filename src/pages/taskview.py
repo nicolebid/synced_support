@@ -76,7 +76,6 @@ task_table_card = dbc.Card(
     className="mb-3"
 )
 # Components -- Right Column -- New Task Entry 
-
 initial_deadlines_data = [{'Task': '', 'Course': '', 'Block': '', 'Teacher': '', 'Due':''}]
 
 # User input options
@@ -97,15 +96,15 @@ new_task_card = dbc.Card(
                     dag.AgGrid(
                         id={'type': 'user-input', 'index': 'deadlines-table'}, 
                         columnDefs=[
-                            {'headerName': 'Task', 'field': 'Task', 'editable': True, 'flex':3},
+                            {'headerName': 'Task', 'field': 'Task', 'editable': True, 'flex':2, 'minWidth':150},
                             {'headerName': 'Course', 'field': 'Course', 'editable': True, 
-                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": courses },'flex':3},
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": courses }, 'flex':2, 'minWidth':120},
                             {'headerName': 'Block', 'field': 'Block', 'editable': True, 
-                                'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ['1-1', '1-2', '1-3','1-4','2-1', '2-2','2-3','2-4'] },'flex':1},
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ['1-1','1-2','1-3','1-4','2-1','2-2','2-3','2-4'] }, 'flex':1, 'minWidth':80},
                             {'headerName': 'Teacher', 'field': 'Teacher', 'editable': True, 
-                                'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": teachers },'flex':3},
-                            {'headerName': 'Due', 'field': 'Due', 'editable': True, "cellDataType": "dateString" ,'flex':1} 
-                        ], 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": teachers}, 'flex':2, 'minWidth':120},
+                            {'headerName': 'Due', 'field': 'Due', 'editable': True, "cellDataType": "dateString", 'flex':1, 'minWidth':90}
+                        ],
                         rowData=initial_deadlines_data, 
                         defaultColDef={
                             'sortable': False,
@@ -124,15 +123,16 @@ new_task_card = dbc.Card(
                         style={
                             'width': '100%',
                             'backgroundColor': '#414141',
-                            'border': '1px solid #555',
-                            "height": "auto",       
-                            "minHeight": "70px",   
+                            'border': '1px solid #555', 
+                            'overflowX' : 'auto'
                         },
                         dashGridOptions={
                             "domLayout": "autoHeight",
                             'headerHeight': 35,
                             'rowHeight': 28,
                             "stopEditingWhenCellsLoseFocus": True,
+                            "suppressHorizontalScroll": False,
+                            "suppressColumnVirtualisation": True, 
                         },
                         className="ag-theme-alpine-dark",
                     ),
@@ -150,7 +150,8 @@ new_task_card = dbc.Card(
                         'alignItems': 'center'} 
                     ), 
                     dcc.Store(id={'index':'csv-write-flag','type':'dynamic-output'}, data=False)                    
-                ], 
+                ],
+                    style={"overflowX": "auto",  "width": "100%"} 
                 ),
             ]
         )
