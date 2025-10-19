@@ -1,6 +1,7 @@
 from dash import html, register_page, dcc, dash_table
 import dash_bootstrap_components as dbc
-from src.data import upcoming_deadlines
+from src.data import upcoming_deadlines, student_list, course_list, teacher_list
+import dash_ag_grid as dag 
 
 register_page(__name__, path="/task-view", name="Task View")
 
@@ -52,7 +53,7 @@ upcoming_deadlines_card = dbc.Card(
                                  'height': 'auto',
                                  'padding': '5px'
                                 },
-                    style_header={'fontWeight': 'bold', 'fontSize':'1rem' },
+                    style_header={'fontWeight': 'bold', 'fontSize':'1rem' , 'backgroundColor': "#242628"},
                     style_table={
                         'width': '100%',      
                         'overflowX': 'auto' 
@@ -75,21 +76,87 @@ task_table_card = dbc.Card(
     className="mb-3"
 )
 # Components -- Right Column -- New Task Entry 
-## COMPLETE HERE------------------------------------------
-##
+
+initial_deadlines_data = [{'Task': '', 'Course': '', 'Block': '', 'Teacher': '', 'Due':''}]
+
+# User input options
+students_dict = student_list()
+students = [i['label'] for i in students_dict]
+teachers_dict = teacher_list()
+teachers = [i['label'] for i in teachers_dict]
+courses_dict = course_list()
+courses = [i['label'] for i in courses_dict]
+
 new_task_card = dbc.Card(
     [
         dbc.CardHeader("New Task Entry"),
         dbc.CardBody(
             [
-              
+                html.Div([
+                    # Table input
+                    dag.AgGrid(
+                        id={'type': 'user-input', 'index': 'deadlines-table'}, 
+                        columnDefs=[
+                            {'headerName': 'Task', 'field': 'Task', 'editable': True, 'flex':3},
+                            {'headerName': 'Course', 'field': 'Course', 'editable': True, 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": courses },'flex':3},
+                            {'headerName': 'Block', 'field': 'Block', 'editable': True, 
+                                'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ['1-1', '1-2', '1-3','1-4','2-1', '2-2','2-3','2-4'] },'flex':1},
+                            {'headerName': 'Teacher', 'field': 'Teacher', 'editable': True, 
+                                'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": teachers },'flex':3},
+                            {'headerName': 'Due', 'field': 'Due', 'editable': True, "cellDataType": "dateString" ,'flex':1} 
+                        ], 
+                        rowData=initial_deadlines_data, 
+                        defaultColDef={
+                            'sortable': False,
+                            'filter': False,
+                            'resizable': False,
+                            'wrapHeaderText': True,
+                            'suppressMovable': True,
+                            'cellStyle': {
+                                'fontSize': '0.8rem',
+                                'color': 'white',
+                                'backgroundColor': '#414141',
+                                'textAlign': 'center',
+                                'padding': '5px',
+                            },
+                        },
+                        style={
+                            'width': '100%',
+                            'backgroundColor': '#414141',
+                            'border': '1px solid #555',
+                            "height": "auto",       
+                            "minHeight": "70px",   
+                        },
+                        dashGridOptions={
+                            "domLayout": "autoHeight",
+                            'headerHeight': 35,
+                            'rowHeight': 28,
+                            "stopEditingWhenCellsLoseFocus": True,
+                        },
+                        className="ag-theme-alpine-dark",
+                    ),
+
+                    # Button - add row/submit data
+                    html.Div([
+                        # Output message
+                        html.Div(id={'index':'output-msg-deadlines','type':'dynamic-output'}, style={'marginRight':'10px', 'fontSize':'0.7rem'}), 
+                        dbc.Button("Add Row", id={'type': 'dynamic-input', 'index': 'add-row-deadlines'}, n_clicks=0, style={'marginRight':'10px', 'fontSize':'0.7rem'}),
+                        dbc.Button("Submit", id={'type': 'dynamic-input', 'index': 'submit-deadlines'}, n_clicks=0, style={'fontSize':'0.7rem'})
+                    ], style={
+                        'display': 'flex',
+                        'justifyContent': 'flex-end',  
+                        'marginTop': '10px', 
+                        'alignItems': 'center'} 
+                    ), 
+                    dcc.Store(id={'index':'csv-write-flag','type':'dynamic-output'}, data=False)                    
+                ], 
+                ),
             ]
         )
     ],
     className="mb-3"
 )
-
-# ---------------------------------------------------------
 
 # Main Layout 
 layout = dbc.Container(

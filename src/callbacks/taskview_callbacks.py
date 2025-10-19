@@ -1,5 +1,6 @@
+import dash
 from dash.dependencies import Input, Output, State
-from src.data import teacher_list, student_list, student_deadlines, teacher_roster, teacher_tasks, save_deleted_changes, save_checked_changes
+from src.data import teacher_list, student_list, student_deadlines, teacher_roster, teacher_tasks, save_deleted_changes, save_checked_changes, save_deadlines_data, upcoming_deadlines
 import pandas as pd 
 from dash import html, dash_table, dcc
 import dash_bootstrap_components as dbc
@@ -8,7 +9,7 @@ from src.config import *
  
 def register_callbacks(app):
     
-    # dropdown for teacher/student selection (filter 1)
+    # -- dropdown for teacher/student selection (filter 1) -- 
     @app.callback(
         [
             Output({'type': 'dynamic-input', 'index': 'select-item'}, 'options'),
@@ -17,7 +18,7 @@ def register_callbacks(app):
         Input({'type': 'dynamic-input', 'index': 'select-type'}, 'value')
     )
 
-    # dropdown for name selection (filter 2)
+    # -- dropdown for name selection (filter 2) -- 
     def update_dropdown(selected_type=None):
         if selected_type == 'Teacher':
             options = teacher_list()
@@ -30,7 +31,7 @@ def register_callbacks(app):
             placeholder = ""
         return options, placeholder
 
-    # Task table updates 
+    # --  Task table display updates -- 
     task_default_df = pd.DataFrame([['','','','']]*3)
     @app.callback(
         Output({'type': 'dynamic-input', 'index': 'dynamic-task-tables'}, 'children'), 
@@ -65,7 +66,7 @@ def register_callbacks(app):
                                  'height': 'auto',
                                  'padding': '5px'
                                 },
-                    style_header={'fontWeight': 'bold', 'fontSize':'1rem' },
+                    style_header={'fontWeight': 'bold', 'fontSize':'1rem', 'backgroundColor' : '#242628' },
                     style_table={
                         'width': '100%',      
                         'overflowX': 'auto' 
@@ -112,7 +113,7 @@ def register_callbacks(app):
                                         'height': 'auto',
                                         'padding': '5px'
                         },
-                        style_header={'fontWeight': 'bold', 'fontSize':'1rem' },
+                        style_header={'fontWeight': 'bold', 'fontSize':'1rem', 'backgroundColor' : '#242628'},
                         style_table={
                                 'width': '100%',      
                                 'overflowX': 'auto' 
@@ -199,3 +200,62 @@ def register_callbacks(app):
             selected_rows_data = [data[i] for i in selected_rows_ind]
             msg = save_checked_changes(selected_rows_data, student_name)
         return msg
+
+    # -- Task Deadlines (User input table) -- 
+    # Add row/submit data/append to csv/reset table
+    @app.callback(
+        [
+            Output({'type': 'user-input', 'index': 'deadlines-table'}, 'rowData'),
+            Output({'type': 'dynamic-output', 'index': 'output-msg-deadlines'}, 'children'), 
+            Output({'index':'csv-write-flag','type':'dynamic-output'}, 'data') # to ensure csv is written prior to updating table    
+        ], 
+        [
+            Input({'type': 'dynamic-input', 'index': 'add-row-deadlines'}, 'n_clicks'),
+            Input({'type': 'dynamic-input', 'index': 'submit-deadlines'}, 'n_clicks'), 
+            Input({'type': 'user-input', 'index': 'deadlines-table'}, 'cellValueChanged')
+       ], 
+        State({'type': 'user-input', 'index': 'deadlines-table'}, 'rowData'),
+        prevent_initial_call=True
+    )
+    def update_deadlines_table(add_clicks, submit_clicks, cell_change, existing_data):
+        
+        ctx = dash.callback_context 
+        if not ctx.triggered:
+            return existing_data, dash.no_update, False
+        
+        triggered_id = ctx.triggered[0]['prop_id'].split('.')[0] 
+
+        # add row
+        if 'add-row-deadlines' in triggered_id: 
+            existing_data.append({'Task': '', 'Course': '', 'Block': '', 'Teacher': '', 'Due':''})
+            return existing_data, '', False
+        
+        # clear message when cell edited
+        if 'deadlines-table' in triggered_id and cell_change:
+            return dash.no_update, '', False
+        
+        # save submitted data
+        elif 'submit-deadlines' in triggered_id:
+
+            cleaned_data = [row for row in existing_data if any(row.values())] 
+
+            if not cleaned_data:
+                return existing_data, 'No valid data to save.', False
+
+            saved = save_deadlines_data(cleaned_data)
+           
+            # reset data
+            reset_data = [{'Task': '', 'Course': '', 'Block': '', 'Teacher': '', 'Due':''}]
+            return reset_data, saved, True
+        return existing_data, '', False
+    
+    # Update Upcoming Deadlines
+    @app.callback(
+        Output({'type': 'dynamic-output', 'index': 'deadlines-table'}, 'data'),   
+        Input({'index':'csv-write-flag','type':'dynamic-output'}, 'data'),
+        prevent_initial_call=True
+    )    
+    def update_upcoming_deadlines(flag):
+        if flag:
+            return upcoming_deadlines()
+        return dash.no_update
