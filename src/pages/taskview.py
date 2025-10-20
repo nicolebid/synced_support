@@ -2,6 +2,7 @@ from dash import html, register_page, dcc, dash_table
 import dash_bootstrap_components as dbc
 from src.data import upcoming_deadlines, student_list, course_list, teacher_list
 import dash_ag_grid as dag 
+from src.callbacks.taskview_callbacks import * 
 
 register_page(__name__, path="/task-view", name="Task View")
 

@@ -6,13 +6,12 @@ from datetime import datetime, timedelta
 import os
 from dash.dependencies import Input, Output, State, MATCH
 from dash import dash_table
-from .data import student_list, student_schedule, teacher_list, student_deadlines, teacher_roster, teacher_tasks, get_student_note, save_student_note, save_workhabits_data, save_deadlines_data, save_deleted_changes, save_checked_changes, workhabit_trend, upcoming_deadlines
-from .graphs import attendance_barchart, workhabit_timeline, timespent_barchart
+from src.data import student_list, student_schedule, teacher_list, student_deadlines, teacher_roster, teacher_tasks, get_student_note, save_student_note, save_workhabits_data, save_deadlines_data, save_deleted_changes, save_checked_changes, workhabit_trend, upcoming_deadlines
+from src.graphs import attendance_barchart, workhabit_timeline, timespent_barchart
 from dash import callback_context
-from .components import *
-from .config import * 
+from src.config import * 
 
-def register_callbacks(app):
+def register_universal_callbacks(app):
 
     # Navbar Callback 
     @app.callback(

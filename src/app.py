@@ -1,13 +1,7 @@
 import dash 
-import dash.html as html
-import dash.dcc as dcc
 import dash_bootstrap_components as dbc
-from dash import Dash
+from dash import Dash, dcc, html
 from dash.dependencies import Input, Output, State
-from .components import *
-from .callbacks import * 
-from src.callbacks import register_callbacks
-
 
 # Initialize app
 app = Dash(
@@ -15,9 +9,15 @@ app = Dash(
     external_stylesheets=[dbc.themes.DARKLY],
     title="Synced Support",
     use_pages=True,
+    pages_folder="pages",
     suppress_callback_exceptions=True,
 )
+
 server = app.server
+
+from src.universal_callbacks import register_universal_callbacks
+register_universal_callbacks(app)
+
 
 LOGO = "https://placehold.co/50x50"
 
@@ -80,7 +80,6 @@ footer = html.Footer(
     className="bg-light border-top mt-5"
 )
 
-
 # Main Layout 
 app.layout = dbc.Container(
     [
@@ -94,9 +93,6 @@ app.layout = dbc.Container(
         "minHeight": "100vh", 
     }
 )
-
-register_callbacks(app)
-
 if __name__ == "__main__":
     app.run_server(debug=True)
 
