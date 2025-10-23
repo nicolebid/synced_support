@@ -122,11 +122,15 @@ def attendance_barchart(selected_student=None, overall=True):
 
     fig.update_layout(
         barmode='stack', 
-        template="plotly_white", 
+        template="plotly_dark", 
+        paper_bgcolor='#313030',   
+        plot_bgcolor='#313030',  
+        font_color='white',        
         margin=dict(l=20, r=20, t=20, b=20), 
         xaxis=dict(
             tickvals=[0, 20, 40, 60, 80, 100], 
             ticktext=['0%', '20%', '40%', '60%', '80%', '100%'], 
+            gridcolor='#555'
         ),
         bargap=gap, 
         autosize=True,
@@ -182,13 +186,18 @@ def attendance_barchart_none(selected_student=None):
         barmode='stack', 
         title=None,
         xaxis_title='Occurences',
-        yaxis_title=None,  
-        template="plotly_white",  
+        yaxis_title=None, 
+        template="plotly_dark", 
+        paper_bgcolor='#313030',   
+        plot_bgcolor='#313030',  
+        font_color='white',         
         xaxis=dict(
             tickvals=tick_values, 
             ticktext=[str(i) for i in tick_values],
-            tickangle=0
+            tickangle=0, 
+            gridcolor = '#555'
         ),
+        yaxis=dict(gridcolor='#555'),
         autosize=True, 
         legend=dict(
             orientation='h', 
@@ -272,7 +281,8 @@ def workhabit_timeline(selected_student=None):
             tickmode='array',
             tickvals=list(range(len(habit_categories))), 
             ticktext=habit_categories, 
-            range=[-0.5, len(habit_categories)-0.5]  
+            range=[-0.5, len(habit_categories)-0.5] , 
+            gridcolor='#555' 
         ),
         title=None,
         xaxis_title=None,
@@ -284,9 +294,13 @@ def workhabit_timeline(selected_student=None):
             ticks="inside",  
             showgrid=True, 
             tickangle=45,
+            gridcolor='#555'
         ),
         margin=dict(l=10, r=10, t=20, b=10), 
-        template="plotly_white",
+        template="plotly_dark", 
+        paper_bgcolor='#313030',   
+        plot_bgcolor='#313030',  
+        font_color='white',         
         dragmode='zoom'
     )
 

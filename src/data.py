@@ -65,7 +65,7 @@ def workhabit_trend(student_name):
 
     # Check if enougth data exists
     if len(df_student) < 5:
-       return "insufficient data", "∅", "∅"
+       return "insufficient data", "∅", "∅", "∅"
 
     # Calculate percent change
     recent = df_student.head(3)
@@ -74,10 +74,26 @@ def workhabit_trend(student_name):
     previous_avg = float(previous['Score'].mean())
     per_change = round(((recent_avg - previous_avg)/previous_avg)*100, 1)
     mag_change = abs(per_change)
+
+    # determine icon for average
+    if recent_avg <= 1:
+        icon_avg = "🚨"
+    elif recent_avg < 2:
+        icon_avg = "⚠️"
+    elif recent_avg < 2.5:
+        icon_avg = "😐"
+    elif recent_avg < 3.5:
+        icon_avg = "🙂"
+    elif recent_avg >= 3.5: 
+        icon_avg = '🌟'
+    
+    # provide message for avg
+    str_avg = str(round(recent_avg,1))
+    message_avg = str_avg + ' out of 4'  
   
-    # provide a message 
+    # provide a message for trend
     if math.isclose(mag_change, 0, abs_tol=1e-5):
-       return "consistent", round(recent_avg,1) , "🔁" 
+       return "consistent", message_avg , "🔁", icon_avg 
    
     if mag_change > 0 and mag_change <= 5:
         mag = "small"
@@ -88,13 +104,14 @@ def workhabit_trend(student_name):
 
     if per_change > 0:
       trend = "increase"
-      icon = "✅"
+      icon_trend = "✅"
     else:
       trend = "decrease"
-      icon = "⚠️"
+      icon_trend = "⚠️"
 
-    message = mag + ' ' + trend 
-    return message, round(recent_avg,1), icon  
+    message_trend = mag + ' ' + trend 
+
+    return message_trend, message_avg, icon_trend, icon_avg 
 
 def get_student_note(student_name):
     """Retrieves the note from the CSV file for the given student.

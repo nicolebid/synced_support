@@ -1,8 +1,10 @@
 from dash import html, register_page, dcc, dash_table
 import dash_bootstrap_components as dbc
-from src.data import student_list 
+from src.data import student_list, course_list, teacher_list 
 from src.callbacks.studentview_callbacks import * 
-
+from src.graphs import attendance_barchart
+from datetime import datetime
+import dash_ag_grid as dag 
 
 register_page(__name__, path="/student-view", name="Student View")
 
@@ -129,12 +131,12 @@ workhabit_insights_card = dbc.Card(
                                         [
                                             html.H3(
                                                 "",
-                                                id={'type': 'dynamic-output', 'index': 'work-habit-avg'},
-                                                style={'textAlign':'center'},
-                                                className="card-title"
+                                                id={'type': 'dynamic-output', 'index': 'work-habit-icon-avg'},
+                                                style={'textAlign': 'center'}
                                             ),
                                             html.Div(
-                                                'Out of 4',
+                                                "",
+                                                id={'type': 'dynamic-output', 'index': 'work-habit-avg'},
                                                 style={'textAlign':'center', 'fontSize':'0.8rem'}
                                             )
                                         ]
@@ -178,7 +180,7 @@ workhabit_graphs_card = dbc.Card(
                             'justifyContent': 'flex-end',
                             'width': '100%'
                         }
-                ),
+                    ),
                     
                     dcc.Graph(
                         id={'type': 'dynamic-output', 'index': 'graph-output'},
@@ -199,7 +201,36 @@ notes_card = dbc.Card(
         dbc.CardHeader("Notes"),
         dbc.CardBody(
             [
-
+                dbc.Textarea(
+                    id={'type': 'note-input', 'index': 'teacher-notes'}, 
+                    placeholder='Type your notes here...', 
+                    style={'width':'100%', 
+                           'fontSize':'0.8rem', 
+                           'height':'100%', 
+                           'minHeight':'150px', 
+                           'backgroundColor': '#242628',
+                            'border': '0.75px solid #FFFFFF',  
+                            'color': 'white',
+                    }
+                ), 
+                html.Div([
+                # Output message
+                    html.Div(id={'type':'dynamic-output','index':'output-msg-note'}, 
+                            style={'fontSize':'0.7rem', 'marginTop':'10px', 'marginRight':'10px'}),
+                    dbc.Button(
+                        'Save', 
+                        id={'type': 'dynamic-input', 'index': 'save-note-button'},
+                        n_clicks=0, 
+                        style={'fontSize':'0.7rem', 'marginTop':'10px'} 
+                    ),   
+                ], 
+                style={
+                    'display': 'flex',               
+                    'justifyContent': 'flex-end',      
+                    'alignItems': 'center',            
+                    'width': '100%', 
+                    'marginLeft':'auto'                  
+                })
             ]
         )
     ],
@@ -207,12 +238,37 @@ notes_card = dbc.Card(
 )
 
 # Components -- Right Column -- Attendance Graphs
+initial_attendance_graph = attendance_barchart()  
+
 attendance_graph_card = dbc.Card(
     [
         dbc.CardHeader("Attendance"),
         dbc.CardBody(
-            [
-
+            [ 
+                html.Div(
+                        [
+                            html.Div("Overall ", style={'display': 'inline-block', 'whiteSpace': 'nowrap', 'marginRight': '9px'}),
+                            dbc.Switch(
+                                id={'type': 'dynamic-input', 'index': 'attendance-toggle'},
+                                value=False,
+                                style={"width": "auto", 'paddingTop': '3px'}
+                            ),
+                            html.Div("Courses", style={'whiteSpace': 'nowrap', 'marginLeft': '3px'}),
+                        ],
+                        style={
+                            'fontSize': '0.8rem',
+                            'display': 'flex',
+                            'alignItems': 'center',    
+                            'justifyContent': 'flex-end',
+                            'width': '100%'
+                        }
+                ),
+                dcc.Graph(
+                    id={'type': 'dynamic-output', 'index': 'attendance-graph'},
+                    figure=initial_attendance_graph,
+                    config={'displayModeBar': False},
+                    style={'flex-grow': '1', 'height':'35.5vh'}  
+                )
             ]
         )
     ],
@@ -220,12 +276,75 @@ attendance_graph_card = dbc.Card(
 )
 
 # Components -- Right Column -- Daily Workhabit Entry 
+initial_workhabit_data = [{'Student': '', 'Workhabit Score': '', 'Focus': '', 'Support Attendance': ''}]
+# User input options
+students_dict = student_list()
+students = [i['label'] for i in students_dict]
+
+teachers_dict = teacher_list()
+teachers = [i['label'] for i in teachers_dict]
+
+courses_dict = course_list()
+courses = [i['label'] for i in courses_dict]
+
 workhabit_entry_card = dbc.Card(
     [
         dbc.CardHeader("Daily Workhabit Entry"),
         dbc.CardBody(
             [
+                html.Div([
+                
+                # Date 
+                dcc.DatePickerSingle(
+                    id={'type':'dynamic-input', 'index':'date-picker'}, 
+                    placeholder="Select date", date=datetime.today().date(), 
+                    style={'marginBottom':'10px'}
+                )
+            ], 
+                style={'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center', 'width': '100%'}  
+            ), 
 
+            # input table
+            dag.AgGrid(
+                id={'type': 'user-input', 'index': 'workhabit-table'},
+                columnDefs=[
+                    {'headerName': 'Student', 'field': 'Student', 'editable': True, 
+                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": students }, 'flex': 1},
+                    {'headerName': 'WH Score', 'field': 'Workhabit Score', 'editable': True, 
+                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["0", "1", "2", "3", "4"]},  'flex': 1},
+                    {'headerName': 'Subject', 'field': 'Focus', 'editable': True, 
+                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["Art", "English", "French", "Math", "Science", "Socials", "Other"]}, 'flex': 1},
+                    {'headerName': 'Attendance', 'field': 'Support Attendance', 'editable': True, 
+                     'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["P", "L", "A", "AE"]},'flex': 1}
+                ],
+                rowData=initial_workhabit_data, 
+                defaultColDef={'sortable': False, 
+                               'filter': False, 
+                               'resizable': False, 
+                               'wrapHeaderText': True, 
+                               'suppressMovable': True, 
+                               'cellStyle': {'fontSize': '0.7rem'},
+                },
+                style={'width': '100%', 'height':'127px'}, 
+                dashGridOptions={'headerHeight': 35, "rowHeight": 25 },
+                className="ag-theme-alpine-dark"
+            ),
+
+            # Button - add row/submit data
+            html.Div([
+                # Output message
+                html.Div(id={'index':'output-msg','type':'dynamic-output'}, style={'fontSize':'0.7rem', 'marginRight':'10px'}),
+                dbc.Button("Add Row", id={'type': 'dynamic-input', 'index': 'add-row-btn'}, n_clicks=0, style={'marginRight':'10px', 'marginTop':'10px', 'fontSize':'0.7rem'}),
+                dbc.Button("Submit", id={'type': 'dynamic-input', 'index': 'submit-btn'}, n_clicks=0, style={'marginTop':'10px', 'fontSize':'0.7rem'})
+            ], 
+                style={
+                    'display': 'flex',               
+                    'justifyContent': 'flex-end',      
+                    'alignItems': 'center',            
+                    'width': '100%', 
+                    'marginLeft':'auto'                  
+                }
+            )
             ]
         )
     ],
