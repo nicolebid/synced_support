@@ -100,8 +100,8 @@ def attendance_barchart(selected_student=None, overall=True):
         
     # Plot 
     status = ['Present', 'Late', 'Excused', 'Absent']
-    colors =['rgba(41, 118, 74, 0.8)', 'rgba(33, 42, 168, 0.8)', 
-                'rgba(239, 164, 107, 0.8)', 'rgba(194, 27, 24, 0.8)']
+    colors =['rgba(41, 118, 74, 0.8)', 'rgba(55, 90, 127, 0.8)', 
+                'rgba(246, 198, 106, 0.8)', 'rgba(194, 27, 24, 0.8)']
         
     # plot barcharts 
     fig = go.Figure()
@@ -130,7 +130,8 @@ def attendance_barchart(selected_student=None, overall=True):
         xaxis=dict(
             tickvals=[0, 20, 40, 60, 80, 100], 
             ticktext=['0%', '20%', '40%', '60%', '80%', '100%'], 
-            gridcolor='#555'
+            gridcolor='#555', 
+            zeroline=False
         ),
         bargap=gap, 
         autosize=True,
@@ -272,7 +273,7 @@ def workhabit_timeline(selected_student=None):
         x=attendance_filter['Date'], 
         y=attendance_filter['Habit'].cat.codes, 
         mode='lines+markers',
-        line=dict(dash='dot', color='rgba(41, 118, 74, 0.8)'),
+        line=dict(dash='dot', color='rgb(246, 198, 106)'),
         hovertemplate="<b>Date:</b> %{x|%b-%d}<br><b>Habit:</b> %{y}<br><extra></extra>" 
     )), 
 
@@ -282,7 +283,8 @@ def workhabit_timeline(selected_student=None):
             tickvals=list(range(len(habit_categories))), 
             ticktext=habit_categories, 
             range=[-0.5, len(habit_categories)-0.5] , 
-            gridcolor='#555' 
+            gridcolor='#555' , 
+            zeroline=False
         ),
         title=None,
         xaxis_title=None,
@@ -350,7 +352,7 @@ def timespent_barchart(selected_student=None):
     fig.add_trace(go.Bar(
         x=all_subjects, 
         y=subject_proportion, 
-        marker_color='rgba(33, 42, 168, 0.8)', 
+        marker_color='rgba(55, 90, 127, 0.8)', 
         hovertemplate=(
         "<b>%{x}</b><br>"                 
         "Count: %{customdata}<br>"     
@@ -362,8 +364,14 @@ def timespent_barchart(selected_student=None):
     fig.update_layout(
         title=None, 
         xaxis_title='Subject Worked On',
-        template='plotly_white', 
+        template='plotly_dark', 
         margin=dict(l=5, r=5, t=10, b=35), 
+        paper_bgcolor='#313030',   
+        plot_bgcolor='#313030',  
+        font_color='white',  
+        xaxis=dict(gridcolor='#555'),
+        yaxis=dict(gridcolor='#555', 
+                   zeroline=False)    
     )
     fig.update_yaxes(tickformat=".0%", 
                      title="Percentage of Time Spent",

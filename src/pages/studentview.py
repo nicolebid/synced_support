@@ -18,12 +18,12 @@ student_filter_card = dbc.Card(
                     options=student_list(), 
                     value='A', 
                     placeholder='Select a student...', 
-                    style={'color': 'black'},
+                    style={'color':'black'}
                 )
             ]
         )
     ],
-    className="mb-3"
+    className="mb-3 dark-dropdown"
 )
 # Components -- Left Column -- Student Schedule
 default_schedule = [{'Block': '1-1', 'Course': None, 'Teacher': None},
@@ -292,59 +292,90 @@ workhabit_entry_card = dbc.Card(
         dbc.CardHeader("Daily Workhabit Entry"),
         dbc.CardBody(
             [
+                # input table
+                dag.AgGrid(
+                    id={'type': 'user-input', 'index': 'workhabit-table'},
+                    columnDefs=[
+                            {'headerName': 'Student', 'field': 'Student', 'editable': True, 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": students }, 
+                            'flex':2, 'minWidth':90},
+                            {'headerName': 'WH Score', 'field': 'Workhabit Score', 'editable': True, 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["0", "1", "2", "3", "4"]},
+                            'flex':2, 'minWidth':100},
+                            {'headerName': 'Subject', 'field': 'Focus', 'editable': True, 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["Art", "English", "French", "Math", "Science", "Socials", "Other"]},
+                            'flex':2, 'minWidth':90},
+                            {'headerName': 'Attendance', 'field': 'Support Attendance', 'editable': True, 
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["P", "L", "A", "AE"]}, 
+                            'flex':2, 'minWidth':110}
+                        ],
+                        rowData=initial_workhabit_data,
+                        defaultColDef={
+                            'sortable': False, 
+                            'filter': False, 
+                            'resizable': False,
+                            'wrapHeaderText': True,
+                            'suppressMovable': True, 
+                            'cellStyle': {'fontSize': '0.8rem',
+                                            'color': 'white',
+                                            'textAlign': 'center',
+                                            'padding': '5px'},
+                        },
+                        style={
+                            'width': '100%',
+                            'backgroundColor': '#414141',
+                            'border': '1px solid #555', 
+                            'overflowX' : 'auto'
+                        }, 
+                        dashGridOptions={
+                            "domLayout": "autoHeight",
+                            'headerHeight': 35,
+                            'rowHeight': 28,
+                            "stopEditingWhenCellsLoseFocus": True,
+                            "suppressHorizontalScroll": False,
+                            "suppressColumnVirtualisation": True, 
+           
+                        },
+                    className="ag-theme-alpine-dark mb-3"
+                ),
+
                 html.Div([
-                
-                # Date 
+                # Left: date picker
                 dcc.DatePickerSingle(
-                    id={'type':'dynamic-input', 'index':'date-picker'}, 
-                    placeholder="Select date", date=datetime.today().date(), 
-                    style={'marginBottom':'10px'}
-                )
-            ], 
-                style={'display': 'flex', 'justify-content': 'space-between', 'align-items': 'center', 'width': '100%'}  
-            ), 
+                    id={'type': 'dynamic-input', 'index': 'date-picker'},
+                    placeholder="Select date",
+                    date=datetime.today().date(),
+                ),
 
-            # input table
-            dag.AgGrid(
-                id={'type': 'user-input', 'index': 'workhabit-table'},
-                columnDefs=[
-                    {'headerName': 'Student', 'field': 'Student', 'editable': True, 
-                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": students }, 'flex': 1},
-                    {'headerName': 'WH Score', 'field': 'Workhabit Score', 'editable': True, 
-                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["0", "1", "2", "3", "4"]},  'flex': 1},
-                    {'headerName': 'Subject', 'field': 'Focus', 'editable': True, 
-                        'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["Art", "English", "French", "Math", "Science", "Socials", "Other"]}, 'flex': 1},
-                    {'headerName': 'Attendance', 'field': 'Support Attendance', 'editable': True, 
-                     'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ["P", "L", "A", "AE"]},'flex': 1}
+                # message + buttons
+                html.Div([
+                    html.Div(
+                        id={'index': 'output-msg', 'type': 'dynamic-output'},
+                        style={'fontSize': '0.7rem', 'marginRight': '10px'}
+                    ),
+                    dbc.Button("Add Row",
+                            id={'type': 'dynamic-input', 'index': 'add-row-btn'},
+                            n_clicks=0,
+                            style={'marginRight': '8px', 'fontSize': '0.7rem'}),
+                    dbc.Button("Submit",
+                            id={'type': 'dynamic-input', 'index': 'submit-btn'},
+                            n_clicks=0,
+                            style={'fontSize': '0.7rem'})
                 ],
-                rowData=initial_workhabit_data, 
-                defaultColDef={'sortable': False, 
-                               'filter': False, 
-                               'resizable': False, 
-                               'wrapHeaderText': True, 
-                               'suppressMovable': True, 
-                               'cellStyle': {'fontSize': '0.7rem'},
-                },
-                style={'width': '100%', 'height':'127px'}, 
-                dashGridOptions={'headerHeight': 35, "rowHeight": 25 },
-                className="ag-theme-alpine-dark"
-            ),
+                    style={'display': 'flex', 'alignItems': 'flex-start'}
+                )
+                    ],
+                        style={
+                            'display': 'flex',
+                            'justifyContent': 'space-between',
+                            'alignItems': 'flex-start',
+                            'width': '100%',
+                        }
+                    )
 
-            # Button - add row/submit data
-            html.Div([
-                # Output message
-                html.Div(id={'index':'output-msg','type':'dynamic-output'}, style={'fontSize':'0.7rem', 'marginRight':'10px'}),
-                dbc.Button("Add Row", id={'type': 'dynamic-input', 'index': 'add-row-btn'}, n_clicks=0, style={'marginRight':'10px', 'marginTop':'10px', 'fontSize':'0.7rem'}),
-                dbc.Button("Submit", id={'type': 'dynamic-input', 'index': 'submit-btn'}, n_clicks=0, style={'marginTop':'10px', 'fontSize':'0.7rem'})
-            ], 
-                style={
-                    'display': 'flex',               
-                    'justifyContent': 'flex-end',      
-                    'alignItems': 'center',            
-                    'width': '100%', 
-                    'marginLeft':'auto'                  
-                }
-            )
+
+           
+
             ]
         )
     ],

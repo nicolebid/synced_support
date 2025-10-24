@@ -116,7 +116,6 @@ new_task_card = dbc.Card(
                             'cellStyle': {
                                 'fontSize': '0.8rem',
                                 'color': 'white',
-                                # 'backgroundColor': '#414141',
                                 'textAlign': 'center',
                                 'padding': '5px',
                             },
