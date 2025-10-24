@@ -67,29 +67,55 @@ footer = html.Footer(
     dbc.Container(
         dbc.Row(
             [
-                dbc.Col(html.P("© 2025 Nicole", className="mb-0"), xs=12, md="auto"),
-                dbc.Col(html.P("Source Code: GitHub", className="mb-0"), xs=12, md="auto"),
-                dbc.Col(html.P("Last Update: Date", className="mb-0"), xs=12, md="auto"),
+                dbc.Col(
+                    html.P("© 2025 Nicole Bidwell", className="mb-0"),
+                    xs=12, md="auto"
+                ),
+                dbc.Col(
+                    html.P(
+                        [
+                            "Source Code: ",
+                            html.A(
+                                "GitHub Repo",
+                                href="https://github.com/nicolebid/synced_support",
+                                target="_blank",
+                                style={"color": "rgba(55, 90, 127, 0.8)", 'fontSize':'0.9rem'}
+                            )
+                        ],
+                        className="mb-0"
+                    ),
+                    xs=12, md="auto"
+                ),
+                dbc.Col(
+                    html.P("Last Update: 23/10/2025", className="mb-0"),
+                    xs=12, md="auto"
+                )
             ],
             justify="between", 
-            className="text-center text-md-start g-2",
+            className="text-center text-md-start g-2"
         ),
         fluid=True,
-        className="py-3",
+        className="py-3"
     ),
     className="bg-light border-top mt-5"
 )
 
 # Main Layout 
-app.layout = dbc.Container(
+app.layout = html.Div(
     [
-        dcc.Location(id="url"), 
-        navbar,
-        dash.page_container, 
-        footer
+        html.Div(
+            [
+                dcc.Location(id="url"), 
+                navbar,
+                dash.page_container
+            ],
+            style={'flex': '1 0 auto'}
+        ),
+            footer
     ],
-    fluid=True,
     style={
+        'display':'flex',
+        'flexDirection':'column',
         "minHeight": "100vh", 
     }
 )
