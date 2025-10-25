@@ -34,7 +34,7 @@ filter_card = dbc.Card(
 # Components -- Left Column -- Upcoming Deadlines 
 upcoming_deadlines_card = dbc.Card(
     [
-        dbc.CardHeader("Upcoming Deadlines"),
+        dbc.CardHeader("All Upcoming Deadlines"),
         dbc.CardBody(
             [
                dash_table.DataTable(
@@ -52,13 +52,14 @@ upcoming_deadlines_card = dbc.Card(
                                 'fontSize':'0.8rem',
                                 'whiteSpace': 'normal',
                                  'height': 'auto',
-                                 'padding': '5px'
+
                                 },
-                    style_header={'fontWeight': 'bold', 'fontSize':'1rem' , 'backgroundColor': "#242628"},
+                    style_header={'fontWeight': 'bold', 'fontSize':'1rem' , 'backgroundColor': "#242628", },
                     style_table={
                         'width': '100%',      
-                        'overflowX': 'auto' 
-                    }
+                        'overflowX': 'auto', 
+                    } 
+                   
                 )
             ]
         )

@@ -115,7 +115,8 @@ def update_content_t2col2(role, name):
                     style_header={'fontWeight': 'bold', 'fontSize':'1rem', 'backgroundColor' : '#242628'},
                     style_table={
                             'width': '100%',      
-                            'overflowX': 'auto' 
+                            'overflowX': 'auto',
+                             'border': '1px solid rgb(213, 210, 211)' 
                     },  
                 )
             ],
@@ -152,7 +153,7 @@ def update_content_t2col2(role, name):
         ])
 # FIX 1) BELOW
 # Adjust Teacher Assigned Task table when date range is changed
-# @app.callback(
+# @callback(
 #     Output({'type': 'dynamic-input', 'index': 'teacher-task-table'}, 'data'),
 #     [
 #         Input({'type': 'dynamic-input', 'index': 'start-date'}, 'data'),
@@ -175,7 +176,8 @@ def update_content_t2col2(role, name):
 #     return table_data
 # FIX two delete "changes saved from student task table "
 
-# saves user updates on student task table   
+
+# Save user updates on student task table   
 @callback(
     Output({'type': 'dynamic-output', 'index': 'output-student-task'}, 'children'),
     Input({'type': 'dynamic-input', 'index': 'save-student-tasks'}, 'n_clicks'),
@@ -206,7 +208,7 @@ def save_task_updates(n_clicks, data, selected_rows_ind, student_name):
     [
         Output({'type': 'user-input', 'index': 'deadlines-table'}, 'rowData'),
         Output({'type': 'dynamic-output', 'index': 'output-msg-deadlines'}, 'children'), 
-        Output({'index':'csv-write-flag','type':'dynamic-output'}, 'data') # to ensure csv is written prior to updating table    
+        Output({'index':'csv-write-flag','type':'dynamic-output'}, 'data'), # to ensure csv is written prior to updating table 
     ], 
     [
         Input({'type': 'dynamic-input', 'index': 'add-row-deadlines'}, 'n_clicks'),

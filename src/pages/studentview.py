@@ -289,7 +289,7 @@ courses = [i['label'] for i in courses_dict]
 
 workhabit_entry_card = dbc.Card(
     [
-        dbc.CardHeader("Daily Workhabit Entry"),
+        dbc.CardHeader("Daily Attendance & Work Habit Entry"),
         dbc.CardBody(
             [
                 # input table
