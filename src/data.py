@@ -65,7 +65,7 @@ def workhabit_trend(student_name):
 
     # Check if enougth data exists
     if len(df_student) < 5:
-       return "insufficient data", "∅", "∅", "∅"
+       return "insufficient data", "insufficient data", "∅", "∅"
 
     # Calculate percent change
     recent = df_student.head(3)
@@ -136,7 +136,7 @@ def get_student_note(student_name):
     return note
 
 def save_student_note(student_name, note):
-    """Updates (or saves) note in the csv file with the new note for the given student. 
+    """Updates note in the csv file with the new note for the given student. 
     
     Parameters
     ----------
@@ -189,11 +189,7 @@ def save_workhabits_data(data, date):
     df_student = pd.read_csv(STUDENT_DATA)
     clean_data = []
     workhabit_scores = {'0':'Off-task', '1':'Mostly Off-task', '2':'Equally On/Off-task', '3':'Mostly On-task', '4':'On-task'}
-
-
-
-
-    
+   
     for data_pt in data:
 
         # Set up
@@ -371,6 +367,7 @@ def teacher_tasks(teacher, start_date, end_date):
 def student_tasks_update():
     """Generates and updates student_tasks.csv to include newly entered deadlines. 
     """
+    print("YES")
     # load data
     df_master = pd.read_csv(DEADLINES_DATA)
     student_schedule = pd.read_csv(STUDENT_DATA)
@@ -498,3 +495,16 @@ def save_checked_changes(selected_rows_data, student_name):
     df_tasks.update(df_student_tasks)
     df_tasks.to_csv(STUDENT_TASKS, index=False)
     return "Changes saved successfully."
+
+# if __name__ == "__main__":
+#     import sys
+#     func_name = sys.argv[1] if len(sys.argv) > 1 else None
+
+#     if func_name:
+#         try:
+#             func = getattr(sys.modules[__name__], func_name)
+#             func()  # call it
+#         except AttributeError:
+#             print(f"No function named '{func_name}' found")
+#     else:
+#         print("No function specified")

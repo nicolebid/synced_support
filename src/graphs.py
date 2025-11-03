@@ -256,17 +256,20 @@ def workhabit_timeline(selected_student=None):
     # Compute the number of days in the selected range
     total_days = (date_range_end - date_range_start).days
 
-    # Set dynamic dtick based on the range
-    if total_days <= 7: 
-        dticks = "D1"  
-    elif total_days <= 30:  
-        dticks = "W1"  
-    elif total_days <= 365:  
-        dticks = "M1" 
-    else:  
-        dticks = "Y1"  
-
-
+    # dynamic dtick based on the range
+    if total_days <= 7:
+        # Daily 
+        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='D')
+    elif total_days <= 30:
+        # Weekly 
+        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='W')
+    elif total_days <= 365:
+        # Monthly
+        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='M')
+    else:
+        # Yearly
+        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='YE')
+    
     # plot
     fig = go.Figure()
     fig.add_trace(go.Scatter(
@@ -290,14 +293,6 @@ def workhabit_timeline(selected_student=None):
         xaxis_title=None,
         yaxis_title=None,
         showlegend=False, 
-        xaxis=dict(
-            dtick=dticks, 
-            tickformat="%b-%d",  
-            ticks="inside",  
-            showgrid=True, 
-            tickangle=45,
-            gridcolor='#555'
-        ),
         margin=dict(l=10, r=10, t=20, b=10), 
         template="plotly_dark", 
         paper_bgcolor='#313030',   
@@ -305,6 +300,15 @@ def workhabit_timeline(selected_student=None):
         font_color='white',         
         dragmode='zoom'
     )
+
+    fig.update_xaxes(
+    tickvals=tickvals,
+    tickformat="%b-%d",
+    ticks="inside",
+    showgrid=True,
+    tickangle=45,
+    gridcolor='#555'
+)
 
     if selected_student != None:
         # red line for each NaN value

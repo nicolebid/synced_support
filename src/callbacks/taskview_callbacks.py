@@ -33,15 +33,22 @@ def update_dropdown(selected_type=None):
 # --  Task table display updates -- 
 task_default_df = pd.DataFrame([['','','','']]*3)
 @callback(
-    Output({'type': 'dynamic-input', 'index': 'dynamic-task-tables'}, 'children'), 
+    [
+        Output({'type': 'dynamic-input', 'index': 'dynamic-task-tables'}, 'children'), 
+        Output({'type':'dynamic-input', 'index':'teacher-date-picker-container'}, 'style')
+
+    ],
     [
         Input({'type': 'dynamic-input', 'index': 'select-type'}, 'value'), 
         Input({'type': 'dynamic-input', 'index': 'select-item'}, 'value'), 
+        Input({'type': 'dynamic-input','index':'date-picker-tasks'}, 'start_date'),
+        Input({'type': 'dynamic-input','index':'date-picker-tasks'}, 'end_date'),
+
     ],
     prevent_initial_call=True
 
 )
-def update_content_t2col2(role, name):
+def update_content_t2col2(role, name, start_date, end_date):
 
     if role == 'Student' and name:
         table_data, selected_indicies = student_deadlines(name)
@@ -68,7 +75,8 @@ def update_content_t2col2(role, name):
                 style_header={'fontWeight': 'bold', 'fontSize':'1rem', 'backgroundColor' : '#242628' },
                 style_table={
                     'width': '100%',      
-                    'overflowX': 'auto' 
+                    'overflowX': 'auto',
+                    'border': '1px solid rgb(213, 210, 211)'
                 }
 
             ), 
@@ -85,18 +93,18 @@ def update_content_t2col2(role, name):
                 'marginTop': '10px', 
                 'alignItems': 'center'
             })     
-        ])
+        ]), {'display': 'none'}
 
     elif role == 'Teacher' and name: 
+        # show date picker
+        date_picker_style = {'display':'block'}
+        if not start_date or not end_date:
+            start_date = (datetime.today() - timedelta(weeks=3)).strftime('%Y-%m-%d')
+            end_date = (datetime.today() + timedelta(weeks=3)).strftime('%Y-%m-%d')
 
         teacher_roster_dict = teacher_roster(name)
-        start = datetime.today() - timedelta(weeks=70)
-        end = datetime.today() + timedelta(weeks=3)
-
-        start_str = start.strftime('%Y-%m-%d')
-        end_str = end.strftime('%Y-%m-%d')
-
-        teacher_task_dict = teacher_tasks(name, start_str, end_str)
+        teacher_task_dict = teacher_tasks(name, start_date, end_date)
+        
         return html.Div([
             # Table
             html.Div([
@@ -116,25 +124,13 @@ def update_content_t2col2(role, name):
                     style_table={
                             'width': '100%',      
                             'overflowX': 'auto',
-                             'border': '1px solid rgb(213, 210, 211)' 
+                            'border': '1px solid rgb(213, 210, 211)' 
                     },  
                 )
             ],
                 className='mb-3'
             ),
-        # Date 
-        html.Div([
-                    dcc.DatePickerRange(
-                        id={'type': 'dynamic-input', 'index': 'date-picker-tasks'},
-                        start_date_placeholder_text="Start date",
-                        end_date_placeholder_text="End date",
-                        start_date=start_str,
-                        end_date=end_str, 
-                        style={'marginBottom':'10px'}
-                    ),
-                ],  
-                ),
-        ])
+        ]), date_picker_style
     else:
         return html.Div([
             dash_table.DataTable(
@@ -150,30 +146,11 @@ def update_content_t2col2(role, name):
                                 'padding': '5px'
             },
             )
-        ])
-# FIX 1) BELOW
-# Adjust Teacher Assigned Task table when date range is changed
-# @callback(
-#     Output({'type': 'dynamic-input', 'index': 'teacher-task-table'}, 'data'),
-#     [
-#         Input({'type': 'dynamic-input', 'index': 'start-date'}, 'data'),
-#         Input({'type': 'dynamic-input', 'index': 'end-date'}, 'data'),
-#         Input({'type': 'dynamic-input', 'index': 'select-item'}, 'value'),  # Teacher selected
-#     ],
-#     prevent_initial_call=True
-# )
-# def update_teacher_task_table(start_date, end_date, teacher_name):
-#     print('Triggered')
-#     if not teacher_name or not start_date or not end_date:
-#         return dash.no_update  # If no teacher or no dates, do not update
+        ]), {'display': 'none'}
+    
 
-#     # Fetch and filter teacher task data based on the selected date range
-#     teacher_task_dict = teacher_tasks(teacher_name, start_date, end_date)
 
-#     # Format the teacher's task data to match the table structure
-#     table_data = [{col: '\n'.join(map(str, students)) for col, students in teacher_task_dict.items()}]
 
-#     return table_data
 # FIX two delete "changes saved from student task table "
 
 

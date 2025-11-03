@@ -2,6 +2,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output, State
+import base64
 
 # Initialize app
 app = Dash(
@@ -19,7 +20,10 @@ from src.universal_callbacks import register_universal_callbacks
 register_universal_callbacks(app)
 
 
-LOGO = "https://placehold.co/50x50"
+LOGO = "img/icon.png"
+with open(LOGO, "rb") as f:
+    encoded_img = base64.b64encode(f.read()).decode("utf-8")
+
 
 # Components -- Navbar
 navbar = dbc.Navbar(
@@ -28,7 +32,12 @@ navbar = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                        dbc.Col(html.Img(src=LOGO, height="40px")),
+                        dbc.Col(
+                                html.Img(
+                                src=f"data:image/png;base64,{encoded_img}",
+                                height="40px"
+                            )
+                        ),
                         dbc.Col(dbc.NavbarBrand("Synced Support", className="ms-2")),
                     ],
                     align="center",

@@ -24,13 +24,22 @@ filter_card = dbc.Card(
                 dcc.Dropdown(
                     id={'type': 'dynamic-input', 'index': 'select-item'}, 
                     placeholder='Select name',
+                    className="mb-3", 
                     style={'color': 'black'},
                 ),
+                html.Div([
+                    dcc.DatePickerRange(
+                        id={'type':'dynamic-input', 'index':'date-picker-tasks'},
+                        start_date=(datetime.today() - timedelta(weeks=3)).strftime('%Y-%m-%d'),
+                        end_date=(datetime.today() + timedelta(weeks=3)).strftime('%Y-%m-%d')
+                    )
+                ],id={'type':'dynamic-input', 'index':'teacher-date-picker-container'}, style={'display':'none'})
             ]
         )
     ],
     className="mb-3"
 )
+
 # Components -- Left Column -- Upcoming Deadlines 
 upcoming_deadlines_card = dbc.Card(
     [
@@ -100,7 +109,7 @@ new_task_card = dbc.Card(
                         columnDefs=[
                             {'headerName': 'Task', 'field': 'Task', 'editable': True, 'flex':2, 'minWidth':150},
                             {'headerName': 'Course', 'field': 'Course', 'editable': True, 
-                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": courses }, 'flex':2, 'minWidth':120},
+                            'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": courses },'flex':2, 'minWidth':120},
                             {'headerName': 'Block', 'field': 'Block', 'editable': True, 
                             'cellEditor':'agSelectCellEditor', "cellEditorParams": {"values": ['1-1','1-2','1-3','1-4','2-1','2-2','2-3','2-4'] }, 'flex':1, 'minWidth':80},
                             {'headerName': 'Teacher', 'field': 'Teacher', 'editable': True, 
