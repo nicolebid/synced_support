@@ -5,8 +5,7 @@ import dash_bootstrap_components as dbc
 from src.config import *
 from src.data import student_schedule, workhabit_trend, get_student_note, save_student_note, save_workhabits_data
 from src.graphs import attendance_barchart, timespent_barchart, workhabit_timeline
-from src.pages.studentview import default_schedule
-
+from src.pages.schedule_data import default_schedule
 # Updating student schedule when the student is selected 
 @callback(
     Output({'type': 'dynamic-output', 'index': 'course-table'}, 'data'), 

@@ -495,16 +495,3 @@ def save_checked_changes(selected_rows_data, student_name):
     df_tasks.update(df_student_tasks)
     df_tasks.to_csv(STUDENT_TASKS, index=False)
     return "Changes saved successfully."
-
-# if __name__ == "__main__":
-#     import sys
-#     func_name = sys.argv[1] if len(sys.argv) > 1 else None
-
-#     if func_name:
-#         try:
-#             func = getattr(sys.modules[__name__], func_name)
-#             func()  # call it
-#         except AttributeError:
-#             print(f"No function named '{func_name}' found")
-#     else:
-#         print("No function specified")

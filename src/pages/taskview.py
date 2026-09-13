@@ -31,7 +31,8 @@ filter_card = dbc.Card(
                     dcc.DatePickerRange(
                         id={'type':'dynamic-input', 'index':'date-picker-tasks'},
                         start_date=(datetime.today() - timedelta(weeks=3)).strftime('%Y-%m-%d'),
-                        end_date=(datetime.today() + timedelta(weeks=3)).strftime('%Y-%m-%d')
+                        end_date=(datetime.today() + timedelta(weeks=3)).strftime('%Y-%m-%d'), 
+                        
                     )
                 ],id={'type':'dynamic-input', 'index':'teacher-date-picker-container'}, style={'display':'none'})
             ]

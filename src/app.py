@@ -3,14 +3,15 @@ import dash_bootstrap_components as dbc
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output, State
 import base64
-
+from src.utils.init_check import is_initialized
+import os 
 # Initialize app
 app = Dash(
     __name__,
     external_stylesheets=[dbc.themes.DARKLY],
     title="Synced Support",
     use_pages=True,
-    pages_folder="pages",
+    pages_folder=os.path.join(os.path.dirname(__file__), "pages"),
     suppress_callback_exceptions=True,
 )
 
@@ -129,6 +130,5 @@ app.layout = html.Div(
     }
 )
 if __name__ == "__main__":
-    app.run_server(debug=True)
-
+    app.run(debug=True)
 

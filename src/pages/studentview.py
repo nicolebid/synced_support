@@ -5,6 +5,7 @@ from src.callbacks.studentview_callbacks import *
 from src.graphs import attendance_barchart
 from datetime import datetime
 import dash_ag_grid as dag 
+from src.pages.schedule_data import default_schedule
 
 register_page(__name__, path="/student-view", name="Student View")
 
@@ -26,15 +27,6 @@ student_filter_card = dbc.Card(
     className="mb-3 dark-dropdown"
 )
 # Components -- Left Column -- Student Schedule
-default_schedule = [{'Block': '1-1', 'Course': None, 'Teacher': None},
-                    {'Block': '1-2', 'Course': None, 'Teacher': None},
-                    {'Block': '1-3', 'Course': None, 'Teacher': None},
-                    {'Block': '1-4', 'Course': None, 'Teacher': None},
-                    {'Block': '2-1', 'Course': None, 'Teacher': None},
-                    {'Block': '2-2', 'Course': None, 'Teacher': None},
-                    {'Block': '2-3', 'Course': None, 'Teacher': None},
-                    {'Block': '2-4', 'Course': None, 'Teacher': None}]
-
 student_schedule_card = dbc.Card(
     [
         dbc.CardHeader('Schedule'),
