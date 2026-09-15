@@ -265,7 +265,7 @@ def workhabit_timeline(selected_student=None):
         tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='W')
     elif total_days <= 365:
         # Monthly
-        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='M')
+        tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='ME')
     else:
         # Yearly
         tickvals = pd.date_range(start=date_range_start, end=date_range_end, freq='YE')
