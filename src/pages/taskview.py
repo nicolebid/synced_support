@@ -18,14 +18,12 @@ filter_card = dbc.Card(
                         {'label': 'Teacher', 'value': 'Teacher'}
                     ],
                     placeholder='Select Student or Teacher...', 
-                    className="mb-3", 
-                    style={'color': 'black'},
+                    className="mb-3"                   
                 ),
                 dcc.Dropdown(
                     id={'type': 'dynamic-input', 'index': 'select-item'}, 
                     placeholder='Select name',
-                    className="mb-3", 
-                    style={'color': 'black'},
+                    className="mb-3"
                 ),
                 html.Div([
                     dcc.DatePickerRange(

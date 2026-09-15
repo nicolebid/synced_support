@@ -1,0 +1,247 @@
+/* ===== Dropdown Student & Task View ===== */
+
+/* Closed dropdown button */
+.dash-dropdown {
+    background-color: #2b2b2b !important;
+    color: white !important;
+    border: 1px solid #555 !important;
+}
+
+.dash-dropdown-placeholder {
+    color: #ccc !important;
+}
+
+/* Open menu popup */
+.dash-dropdown-content {
+    background-color: #2b2b2b !important;
+    border: 1px solid #555 !important;
+}
+
+/* Search input area at top of menu */
+.dash-dropdown-search-container {
+    background-color: #2b2b2b !important;
+}
+
+.dash-dropdown-search-container input {
+    background-color: #2b2b2b !important;
+    color: white !important;
+}
+
+/* Options list */
+.dash-dropdown-options {
+    background-color: #2b2b2b !important;
+}
+
+/* Each option row */
+.dash-dropdown-option {
+    background-color: #2b2b2b !important;
+    color: white !important;
+}
+
+.dash-dropdown-option:hover {
+    background-color: #444 !important;
+}
+
+/* Selected option */
+.dash-dropdown-option.selected {
+    background-color: #76828f !important;
+    color: white !important;
+}
+/* Adjust menu dropdown border */
+.dash-dropdown-option:focus,
+.dash-dropdown-option[data-highlighted] {
+    outline: none !important;
+    background-color: #444 !important;
+}
+
+.dash-dropdown:focus,
+.dash-dropdown:focus-visible {
+    outline: 1px solid #375A7F !important;
+    box-shadow: none !important;
+}
+.dash-dropdown-search-container:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #375A7F !important;
+}
+.dash-dropdown-search-container svg {
+    fill: #ccc !important;
+    stroke: #ccc !important;
+    color: #ccc !important;
+}
+.dash-dropdown-trigger svg:hover,
+.dash-dropdown button:hover svg {
+    fill: #375A7F !important;
+    stroke: #375A7F !important;
+    color: #375A7F !important;
+}
+/* ===== Date Picker Range Task View ===== */
+
+/* Outer container */
+.dash-datepicker {
+    background-color: #2b2b2b !important;
+    border: 1px solid #555 !important;
+}
+
+.dash-datepicker-input-wrapper {
+    background-color: #2b2b2b !important;
+}
+
+/* Input boxes */
+.dash-datepicker-input {
+    background-color: #2b2b2b !important;
+    color: white !important;
+    border: none !important;
+}
+
+/* Icons */
+.dash-datepicker-range-arrow,
+.dash-datepicker-caret-icon {
+    fill: #ccc !important;
+    stroke: #ccc !important;
+}
+.dash-datepicker-input:focus {
+    outline: none !important;
+    border: 1px solid #375A7F !important;
+    box-shadow: none !important;
+}
+
+.dash-datepicker-input-wrapper:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #375A7F !important;
+}
+.dash-datepicker-content {
+    background-color: #2b2b2b !important;
+    border: 1px solid #555 !important;
+}
+/* Regular day numbers */
+.dash-datepicker-calendar-date-inside {
+    color: #ddd !important;
+}
+
+.dash-datepicker-calendar-date-inside:hover {
+    background-color: #444 !important;
+    color: white !important;
+}
+
+/* Selected date */
+.dash-datepicker-calendar-date-selected {
+    background-color: #375A7F !important;
+    color: white !important;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.dash-datepicker-content button {
+    color: #375A7F !important;
+}
+
+.dash-datepicker-content svg {
+    fill: currentColor !important;
+}
+.dash-input-container.dash-input {
+    background-color: #2b2b2b !important;
+    border: 1px solid #555 !important;
+}
+
+.dash-input-element {
+    background-color: #2b2b2b !important;
+    color: white !important;
+}
+
+.dash-input-stepper {
+    background-color: #2b2b2b !important;
+    color: #375A7F !important;
+}
+
+.dash-input-stepper:hover {
+    background-color: #444 !important;
+}
+.dash-datepicker-content th {
+    color: #ccc !important;
+}
+.dash-input-container.dash-input:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #375A7F !important;
+}
+
+.dash-input-element:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+/* Days within the selected range */
+.dash-datepicker-calendar-date-highlighted {
+    background-color: #2c4a63 !important;
+    color: white !important;
+}
+
+.dash-datepicker-calendar-date-highlighted:hover {
+    background-color: #656e79 !important;
+    color: white !important;
+}
+/* Days within the selected range (lighter) */
+.dash-datepicker-calendar-date-highlighted {
+    background-color: #2c4a63 !important;
+    color: white !important;
+}
+
+.dash-datepicker-calendar-date-highlighted:hover {
+    background-color: #375A7F !important;
+    color: white !important;
+}
+
+/* Selected start/end dates */
+.dash-datepicker-calendar-date-selected {
+    background-color: #1e3548 !important;
+    color: white !important;
+    font-weight: bold !important;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+.dash-datepicker-calendar-date-selected:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+/* Month dropdown button background */
+.dash-datepicker-content button[aria-haspopup] {
+    background-color: #1f1f1f !important;
+}
+
+/* Number stepper buttons */
+.dash-input-stepper {
+    background-color: #1f1f1f !important;
+    color: #375A7F !important;
+}
+
+.dash-input-stepper:hover {
+    background-color: #333 !important;
+}
+/* Month dropdown */
+.dash-datepicker-content button[aria-haspopup] {
+    background-color: #1f1f1f !important;
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+}
+.dash-datepicker-content button[aria-haspopup] * {
+    background-color: transparent !important;
+}
+/* Year stepper */
+.dash-input-container.dash-input {
+    background-color: #1f1f1f !important;
+    border: 1px solid #444 !important;
+    border-radius: 4px !important;
+}
+.dash-input-stepper {
+    background-color: transparent !important;
+    color: #375A7F !important;
+}
+.dash-input-stepper:hover {
+    background-color: #333 !important;
+}
+.dash-input-element {
+    background-color: transparent !important;
+    color: white !important;
+}
