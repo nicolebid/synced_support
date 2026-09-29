@@ -99,8 +99,8 @@ def update_content_t2col2(role, name, start_date, end_date):
         # show date picker
         date_picker_style = {'display':'block'}
         if not start_date or not end_date:
-            start_date = (datetime.today() - timedelta(weeks=3)).strftime('%Y-%m-%d')
-            end_date = (datetime.today() + timedelta(weeks=3)).strftime('%Y-%m-%d')
+            start_date = (FROZEN_TODAY - timedelta(weeks=3)).strftime('%Y-%m-%d')
+            end_date = (FROZEN_TODAY + timedelta(weeks=3)).strftime('%Y-%m-%d')
 
         teacher_roster_dict = teacher_roster(name)
         teacher_task_dict = teacher_tasks(name, start_date, end_date)

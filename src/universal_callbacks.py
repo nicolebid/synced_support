@@ -38,7 +38,12 @@ def register_universal_callbacks(app):
 
         return is_open
 
-  
-
-
-    
+    # Logout Callback - resets demo session and sends user back to the landing page
+    @app.callback(
+        Output("demo-session", "data", allow_duplicate=True),
+        Output("url", "pathname"),
+        Input("logout-button", "n_clicks"),
+        prevent_initial_call=True,
+    )
+    def handle_logout(n_clicks):
+        return False, "/"

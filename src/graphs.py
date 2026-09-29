@@ -245,6 +245,25 @@ def workhabit_timeline(selected_student=None):
     
     attendance_filter = attendance_filter[['Date', 'Habit']]
 
+    if attendance_filter.empty:
+        fig = go.Figure()
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor='#313030',
+            plot_bgcolor='#313030',
+            font_color='white',
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            annotations=[dict(
+                text="No work habit data available for this student.",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5,
+                showarrow=False,
+                font=dict(size=14, color="white")
+            )]
+        )
+        return fig    
+
     # Ordinal Categories 
     habit_categories = ['Off-task', 'Mostly Off-task', 'Equally On/Off-task',  'Mostly On-task', 'On-task']
     attendance_filter['Habit'] = pd.Categorical(attendance_filter['Habit'], categories=habit_categories, ordered=True)

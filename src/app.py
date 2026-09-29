@@ -16,7 +16,6 @@ app = Dash(
 )
 
 server = app.server
-
 from src.universal_callbacks import register_universal_callbacks
 register_universal_callbacks(app)
 
@@ -24,6 +23,10 @@ register_universal_callbacks(app)
 LOGO = "img/icon.png"
 with open(LOGO, "rb") as f:
     encoded_img = base64.b64encode(f.read()).decode("utf-8")
+
+GITHUB_LOGO = "img/github_logo.png"
+with open(GITHUB_LOGO, "rb") as f:
+    encoded_github_logo = base64.b64encode(f.read()).decode("utf-8")
 
 
 # Components -- Navbar
@@ -57,6 +60,8 @@ navbar = dbc.Navbar(
                     [
                         dbc.NavItem(dbc.NavLink("Student View", href="/student-view")),
                         dbc.NavItem(dbc.NavLink("Task View", href="/task-view")),
+                        dbc.NavItem(dbc.NavLink("Logout", id="logout-button", href="#", n_clicks=0)),
+
                     ],
                     className="ms-auto", 
                     navbar=True,
@@ -78,26 +83,29 @@ footer = html.Footer(
         dbc.Row(
             [
                 dbc.Col(
-                    html.P("© 2025 Nicole Bidwell", className="mb-0"),
+                    html.P("© 2026 Nicole Bidwell", className="mb-0"),
                     xs=12, md="auto"
                 ),
                 dbc.Col(
                     html.P(
                         [
                             "Source Code: ",
-                            html.A(
-                                "GitHub Repo",
-                                href="https://github.com/nicolebid/synced_support",
-                                target="_blank",
-                                style={"color": "rgba(55, 90, 127, 0.8)", 'fontSize':'0.9rem'}
-                            )
+                                    html.A(
+                                        html.Img(
+                                            src=f"data:image/png;base64,{encoded_github_logo}",
+                                            height="20px",
+                                            style={"verticalAlign": "middle"}
+                                        ),
+                                        href="https://github.com/nicolebid/synced_support",
+                                        target="_blank",
+                                    ), 
                         ],
                         className="mb-0"
                     ),
                     xs=12, md="auto"
                 ),
                 dbc.Col(
-                    html.P("Last Update: 23/10/2025", className="mb-0"),
+                    html.P("Last Update: 28/09/2026", className="mb-0"),
                     xs=12, md="auto"
                 )
             ],
@@ -116,6 +124,7 @@ app.layout = html.Div(
         html.Div(
             [
                 dcc.Location(id="url"), 
+                dcc.Store(id="demo-session", storage_type="session", data=False), 
                 navbar,
                 dash.page_container
             ],
@@ -130,5 +139,5 @@ app.layout = html.Div(
     }
 )
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
 

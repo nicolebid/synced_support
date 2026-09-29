@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import math
-from .config import STUDENT_DATA, DEADLINES_DATA, STUDENT_NOTE, ATTEND_DATA, STUDENT_TASKS
+from .config import STUDENT_DATA, DEADLINES_DATA, STUDENT_NOTE, ATTEND_DATA, STUDENT_TASKS, FROZEN_TODAY
 import os
 
 # TAB 1 - DATA 
@@ -249,7 +249,7 @@ def course_list():
     return options 
 
 def upcoming_deadlines():
-    """Retrieves the tasks in the deadlines CSV file that are due within 2 weeks of the current
+    """Retrieves the tasks in the deadlines CSV file that are due within 4 weeks of the current
     date and returns the values in a list. 
     
     Returns:
@@ -258,7 +258,7 @@ def upcoming_deadlines():
     """
     df = pd.read_csv(DEADLINES_DATA)
     df['Due'] = pd.to_datetime(df['Due'])
-    today = datetime.today().date()
+    today = FROZEN_TODAY
     upcoming_weeks = today + timedelta(weeks=4)
     df_upcoming = df[(df['Due'].dt.date >= today) & ((df['Due'].dt.date <= upcoming_weeks))].copy()
     df_upcoming = df_upcoming.sort_values(by='Due')

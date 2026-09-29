@@ -336,7 +336,7 @@ workhabit_entry_card = dbc.Card(
                 dcc.DatePickerSingle(
                     id={'type': 'dynamic-input', 'index': 'date-picker'},
                     placeholder="Select date",
-                    date=datetime.today().date(),
+                    date=FROZEN_TODAY,
                 ),
 
                 # message + buttons

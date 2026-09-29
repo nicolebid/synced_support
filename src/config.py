@@ -1,4 +1,7 @@
 import os
+from datetime import date
+
+FROZEN_TODAY = date(2026, 9, 16)
 
 # Directories
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
