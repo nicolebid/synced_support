@@ -35,7 +35,7 @@ layout = html.Div(
             },
         ),
         html.P(
-            "A dashboard for tracking student schedules, attendance, work habits, and deadlines.",
+            "A dashboard for Learning Support Teachers to track their students' deadlines, schedules, attendance, and work habits.",
             className="text-center text-light mb-5"
         ),
 
