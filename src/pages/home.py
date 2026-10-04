@@ -74,7 +74,7 @@ layout = html.Div(
                 ),
             ],
             id="landing-modal",
-            is_open=False,
+            is_open=True,
             backdrop="static",
             keyboard=False,
             centered=True,
