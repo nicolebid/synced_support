@@ -8,17 +8,15 @@ from src.config import DEMO_MODE
 @callback(
     Output("landing-modal", "is_open"),
     Input("url", "pathname"),
-    State("demo-session", "data"),
-    prevent_initial_call=False
+    Input("demo-session", "data"),
 )
-def sync_modal_on_load(pathname, demo_entered):
+def sync_modal(pathname, demo_entered):
     if not DEMO_MODE:
         return False
-    if pathname == "/":
-        return not demo_entered
-    return dash.no_update
+    return pathname == "/" and not demo_entered
 
 
+# Upon attempt to log in during demo mode 
 @callback(
     Output("login-message", "children"),
     Input("login-button", "n_clicks"),
@@ -29,16 +27,14 @@ def sync_modal_on_load(pathname, demo_entered):
 def handle_login_attempt(n_clicks, username, password):
     return "Click 'Enter Demo' below to explore the dashboard."
 
-
-# Clicking Enter Demo closes the modal AND marks the session as "entered"
+# Enter demo mode 
 @callback(
-    Output("landing-modal", "is_open", allow_duplicate=True),
     Output("demo-session", "data"),
     Input("enter-demo-button", "n_clicks"),
-    prevent_initial_call=True
+    prevent_initial_call=True,
 )
 def enter_demo(n_clicks):
-    return False, True
+    return True
 
 # Collapsible card for Student View info 
 @callback(
