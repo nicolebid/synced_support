@@ -110,8 +110,11 @@ def update_content_t2col2(role, name, start_date, end_date):
             html.Div([
                 dash_table.DataTable(
                     columns=[{'name': col, 'id': col} for col in teacher_roster_dict.keys()], 
-                    data=[{col: '\n'.join(map(str, students)) for col, students in teacher_task_dict.items()},
-                        {col: '\n'.join(map(str, students)) for col, students in teacher_roster_dict.items()}],
+                   data=[{col: '\n'.join(map(str, students)) for col, students in teacher_task_dict.items()},
+                            {col: '\n'.join(sorted(map(str, students), key=str.lower))
+                                for col, students in teacher_roster_dict.items()
+                            }
+                        ],
                     style_data={'whiteSpace': 'pre-line'},
                     style_cell={'backgroundColor': "#414141", 
                                     'textAlign': 'center', 

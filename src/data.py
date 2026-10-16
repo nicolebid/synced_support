@@ -15,7 +15,7 @@ def student_list():
             student in the dataset, to be used as the dropdown options.
     """
     df = pd.read_csv(STUDENT_DATA)
-    student_names = df['Student'].unique()
+    student_names = sorted(df['Student'].dropna().unique(), key=str.lower)
     options = [{'label': name, 'value': name} for name in student_names]
     return options 
 
@@ -237,7 +237,10 @@ def teacher_list():
     """
     df = pd.read_csv(STUDENT_DATA)
     df = df[~df['Course'].str.contains('Support', regex=True)]
-    teachers = df['Teacher'].unique()
+    teachers = sorted(
+        df['Teacher'].dropna().unique(),
+        key=lambda name: name.split('.', 1)[-1].strip().lower()
+    )
     options = [{'label': name, 'value': name} for name in teachers]
     return options 
 
