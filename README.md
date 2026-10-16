@@ -1,26 +1,28 @@
  # Synced Support  
 
-A dashboard application intended for Learning Support Teachers or teachers who manage caseloads and support students across all their subjects. 
+A dashboard application intended for Learning Support Teachers or teachers who manage caseloads and support high school student across all their subjects. 
 
 ## 🎯 Motivation 
 
-Learning Support Teachers typically work with students who have diverse learning needs. Keeping track of deadlines, supporting students in completing assignments, communicating with classroom teachers, and ensuring students receive essential accommodations are only part of what these teachers do. With caseloads of up to 40 or more students, each with up to 8 teachers, this becomes a complex and demanding task.
+Learning Support Teachers typically work with students who have diverse learning needs. Keeping track of students' deadlines, supporting students in completing assignments, communicating with classroom teachers, and ensuring students receive essential accommodations are only part of what these teachers do. With caseloads of up to 40 or more students, each with up to 8 teachers, this becomes a complex and demanding task.
 
 This application simplifies these tasks for teachers by providing an interactive dashboard. Teachers can easily track upcoming deadlines, filter and view student schedules, monitor work habits and attendance, and gain insight into students' progress—all in one convenient location to streamline their workflow.
 
 ## ▶️ Try out the App!
 
-Check out the dashboard (pre-filled with sample data) here: [Synced Support](<link>).
+Check out the dashboard demo (containing pre-filled sample data and frozen date) here: [Synced Support](<link>).
 
 - Student View: Explore student profiles with daily schedules, work, and attendance habits, and add personalized notes or observations.
 
 - Task View: Track upcoming deadlines, filter by student or teacher, add new tasks, and keep track of what each student needs to complete.
 
+*Note: the demo version of the dashboard does not allow new data entries to be saved.* 
+
 ![Demo](<directory with gif>)
 
 ## 🤝 Support the Project!
 
-If you are interested in contributing to the development of the Synced Support dashboard, please read the [contributing guidelines](CONTRIBUTING.md) for full details. Below are quick steps to run the dashboard locally. 
+If you are interested in contributing to the development of the Synced Support dashboard, please read the [contributing guidelines](CONTRIBUTING.md) for full details. Below are the steps to run the dashboard locally. 
 
 ### Run the App Locally
 
