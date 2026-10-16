@@ -80,8 +80,8 @@ def save_notes(note_value, n_clicks, student_selected, current_note_value):
     if n_clicks > 0: 
 
         if student_selected and note_value:
-            save_student_note(student_selected, note_value)
-            return "Note saved.", 0 
+            result = save_student_note(student_selected, note_value)
+            return result, 0
     return '', 0 
 
  # Update attendance graph based on student and graph type 

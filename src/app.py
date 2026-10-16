@@ -125,6 +125,46 @@ app.layout = html.Div(
             [
                 dcc.Location(id="url"), 
                 dcc.Store(id="demo-session", storage_type="session", data=False), 
+                dbc.Modal(
+                            [
+                                dbc.ModalHeader("Log In", close_button=False),
+                                dbc.ModalBody(
+                                    [
+                                        dbc.Input(
+                                            id="login-username",
+                                            placeholder="Username",
+                                            type="text",
+                                            className="mb-3"
+                                        ),
+                                        dbc.Input(
+                                            id="login-password",
+                                            placeholder="Password",
+                                            type="password",
+                                            className="mb-3"
+                                        ),
+                                        dbc.Button(
+                                            "Log In",
+                                            id="login-button",
+                                            n_clicks=0,
+                                            className="w-100 mb-3"
+                                        ),
+                                        html.Div(id="login-message", className="text-center", style={"fontSize": "0.9rem"}),
+                                        dbc.Button(
+                                            "Enter Demo",
+                                            id="enter-demo-button",
+                                            color="primary",
+                                            n_clicks=0,
+                                            className="w-100"
+                                        ),
+                                    ]
+                                ),
+                            ],
+                            id="landing-modal",
+                            is_open=False,
+                            backdrop="static",
+                            keyboard=False,
+                            centered=True,
+                        ),     
                 navbar,
                 dash.page_container
             ],
@@ -139,5 +179,5 @@ app.layout = html.Div(
     }
 )
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=False, use_reloader=False)
 

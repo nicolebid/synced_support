@@ -37,48 +37,7 @@ layout = html.Div(
         html.P(
             "A dashboard for Learning Support Teachers to track their students' deadlines, schedules, attendance, and work habits.",
             className="text-center text-light mb-5"
-        ),
-
-        dbc.Modal(
-            [
-                dbc.ModalHeader("Log In", close_button=False),
-                dbc.ModalBody(
-                    [
-                        dbc.Input(
-                            id="login-username",
-                            placeholder="Username",
-                            type="text",
-                            className="mb-3"
-                        ),
-                        dbc.Input(
-                            id="login-password",
-                            placeholder="Password",
-                            type="password",
-                            className="mb-3"
-                        ),
-                        dbc.Button(
-                            "Log In",
-                            id="login-button",
-                            n_clicks=0,
-                            className="w-100 mb-3"
-                        ),
-                        html.Div(id="login-message", className="text-center", style={"fontSize": "0.9rem"}),
-                        dbc.Button(
-                            "Enter Demo",
-                            id="enter-demo-button",
-                            color="primary",
-                            n_clicks=0,
-                            className="w-100"
-                        ),
-                    ]
-                ),
-            ],
-            id="landing-modal",
-            is_open=False,
-            backdrop="static",
-            keyboard=False,
-            centered=True,
-        ),     
+        ),    
         dbc.Row(
             dbc.Col(
                 [
