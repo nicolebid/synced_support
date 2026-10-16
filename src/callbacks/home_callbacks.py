@@ -1,6 +1,7 @@
 import dash
 from dash import callback
 from dash.dependencies import Input, Output, State
+from src.config import DEMO_MODE 
 
 
 # Show the modal on landing, UNLESS the user already entered demo mode this session
@@ -11,6 +12,8 @@ from dash.dependencies import Input, Output, State
     prevent_initial_call=False
 )
 def sync_modal_on_load(pathname, demo_entered):
+    if not DEMO_MODE:
+        return False
     if pathname == "/":
         return not demo_entered
     return dash.no_update

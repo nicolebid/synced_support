@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 import math
-from .config import STUDENT_DATA, DEADLINES_DATA, STUDENT_NOTE, ATTEND_DATA, STUDENT_TASKS, FROZEN_TODAY
+from .config import STUDENT_DATA, DEADLINES_DATA, STUDENT_NOTE, ATTEND_DATA, STUDENT_TASKS, FROZEN_TODAY, DEMO_MODE
 import os
 
 # TAB 1 - DATA 
@@ -149,6 +149,10 @@ def save_student_note(student_name, note):
     -------
     str: Verified message.  
     """
+    # exit early for demo mode
+    if DEMO_MODE:
+        return "Demo mode - data not saved."
+
     if os.path.exists(STUDENT_NOTE):
         df = pd.read_csv(STUDENT_NOTE)
         
@@ -180,12 +184,16 @@ def save_workhabits_data(data, date):
     date: str
         The date for the data entry obtained from the dash datepicker component. 
 
-
     Returns
     -------
     str: Verified message.  
         
     """
+    # exit early for demo mode
+    if DEMO_MODE:
+        return "Demo mode - data not saved."
+
+
     df_student = pd.read_csv(STUDENT_DATA)
     clean_data = []
     workhabit_scores = {'0':'Off-task', '1':'Mostly Off-task', '2':'Equally On/Off-task', '3':'Mostly On-task', '4':'On-task'}
@@ -367,7 +375,6 @@ def teacher_tasks(teacher, start_date, end_date):
 def student_tasks_update():
     """Generates and updates student_tasks.csv to include newly entered deadlines. 
     """
-    print("YES")
     # load data
     df_master = pd.read_csv(DEADLINES_DATA)
     student_schedule = pd.read_csv(STUDENT_DATA)
@@ -406,6 +413,10 @@ def save_deadlines_data(data):
     -------
     str: Verified message.  
     """
+    # exit early for demo mode
+    if DEMO_MODE:
+        return "Demo mode - data not saved."
+
     clean_data = []
     
     for data_pt in data:        
@@ -447,6 +458,10 @@ def save_deleted_changes(data, student_name):
     -------
     str: Verified message.  
     """
+     # exit early for demo mode
+    if DEMO_MODE:
+        return "Demo mode - data not saved."
+    
     df_tasks = pd.read_csv(STUDENT_TASKS)
     df_student_tasks = df_tasks[df_tasks['Student'] == student_name]
   
@@ -478,6 +493,10 @@ def save_checked_changes(selected_rows_data, student_name):
     -------
     str: Verified message.  
     """
+    # exit early for demo mode
+    if DEMO_MODE:
+        return "Demo mode - data not saved."
+
     df_tasks = pd.read_csv(STUDENT_TASKS)
     df_student_tasks = df_tasks[df_tasks['Student'] == student_name].copy()
 
