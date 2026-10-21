@@ -4,7 +4,7 @@ A dashboard application intended for Learning Support Teachers or teachers who m
 
 ## 🎯 Motivation 
 
-Learning Support Teachers typically work with students who have diverse learning needs. Keeping track of students' deadlines, supporting students in completing assignments, communicating with classroom teachers, and ensuring students receive essential accommodations are only part of what these teachers do. With caseloads of up to 40 or more students, each with up to 8 teachers, this becomes a complex and demanding task.
+Learning Support Teachers typically work with students who have diverse learning needs. Keeping track of students' deadlines, supporting students in completing assignments, communicating with classroom teachers, and ensuring students receive essential accommodations are only part of what these teachers do. With caseloads of up to 40 or more students, who have up to 8 teachers each, this becomes a complex and demanding task.
 
 This application simplifies these tasks for teachers by providing an interactive dashboard. Teachers can easily track upcoming deadlines, filter and view student schedules, monitor work habits and attendance, and gain insight into students' progress—all in one convenient location to streamline their workflow.
 
