@@ -6,11 +6,11 @@ A dashboard application intended for Learning Support Teachers or teachers who m
 
 Learning Support Teachers typically work with students who have diverse learning needs. Keeping track of students' deadlines, supporting students in completing assignments, communicating with classroom teachers, and ensuring students receive essential accommodations are only part of what these teachers do. With caseloads of up to 40 or more students, who have up to 8 teachers each, this becomes a complex and demanding task.
 
-This application simplifies these tasks for teachers by providing an interactive dashboard. Teachers can easily track upcoming deadlines, filter and view student schedules, monitor work habits and attendance, and gain insight into students' progress—all in one convenient location to streamline their workflow.
+This application provides an interactive dashboard to streamline Learning Support Teachers' workflows. Teachers can easily track upcoming deadlines, filter and view student schedules, monitor work habits and attendance, and gain insight into students' progress—all in one convenient location.
 
 ## ▶️ Try out the App!
 
-Check out the dashboard demo (containing pre-filled sample data and frozen date) here: [Synced Support](<link>).
+Check out the dashboard demo (containing pre-filled sample data and a frozen date) here: [Synced Support](https://synced-support.onrender.com).
 
 - Student View: Explore student profiles with daily schedules, work, and attendance habits, and add personalized notes or observations.
 
@@ -18,7 +18,7 @@ Check out the dashboard demo (containing pre-filled sample data and frozen date)
 
 *Note: the demo version of the dashboard does not allow new data entries to be saved.* 
 
-![Demo](<directory with gif>)
+<img width="720" height="326" alt="demo_gif (1)" src="https://github.com/user-attachments/assets/758237c0-9e1c-4c08-bccd-9b8106259157" />
 
 ## 🤝 Support the Project!
 
