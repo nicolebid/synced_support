@@ -18,7 +18,9 @@ Check out the dashboard demo (containing pre-filled sample data and a frozen dat
 
 *Note: the demo version of the dashboard does not allow new data entries to be saved.* 
 
-<img width="720" height="326" alt="demo_gif (1)" src="https://github.com/user-attachments/assets/758237c0-9e1c-4c08-bccd-9b8106259157" />
+<div align="center">
+  <img width="720" height="326" alt="demo_gif (1)" src="https://github.com/user-attachments/assets/758237c0-9e1c-4c08-bccd-9b8106259157" />
+</div>
 
 ## 🤝 Support the Project!
 
